@@ -23,7 +23,7 @@ DROP TABLE IF EXISTS `artists`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `artists` (
-  `artist_id` int(11) NOT NULL AUTO_INCREMENT,
+  `artist_id` int NOT NULL AUTO_INCREMENT,
   `artist_name` varchar(45) DEFAULT NULL,
   `artist_hometown` varchar(45) DEFAULT NULL,
   `artist_genre` varchar(15) DEFAULT NULL,
@@ -48,7 +48,7 @@ DROP TABLE IF EXISTS `customers`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `customers` (
-  `customer_id` int(11) NOT NULL AUTO_INCREMENT,
+  `customer_id` int NOT NULL AUTO_INCREMENT,
   `customer_firstname` varchar(45) DEFAULT NULL,
   `customer_lastname` varchar(45) DEFAULT NULL,
   `customer_email` varchar(45) DEFAULT NULL,
@@ -74,14 +74,15 @@ DROP TABLE IF EXISTS `eventcustomer`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `eventcustomer` (
-  `eventcustomer_id` int(11) NOT NULL AUTO_INCREMENT,
+  `eventcustomer_id` int NOT NULL AUTO_INCREMENT,
   `eventcustomer_viplevel` varchar(45) DEFAULT NULL,
-  `customer_id` int(11) DEFAULT NULL,
-  `event_id` int(11) DEFAULT NULL,
+  `customer_id` int DEFAULT NULL,
+  `event_id` int DEFAULT NULL,
   PRIMARY KEY (`eventcustomer_id`),
   KEY `customer_id_idx` (`customer_id`),
   KEY `event_id_idx` (`event_id`),
-  CONSTRAINT `customer_id` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`customer_id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `customer_id` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`customer_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `eventcustomer_ibfk_1` FOREIGN KEY (`event_id`) REFERENCES `events` (`event_id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -102,7 +103,7 @@ DROP TABLE IF EXISTS `events`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `events` (
-  `event_id` int(11) NOT NULL AUTO_INCREMENT,
+  `event_id` int NOT NULL AUTO_INCREMENT,
   `event_date` date DEFAULT NULL,
   `event_time` time DEFAULT NULL,
   `event_name` varchar(45) DEFAULT NULL,
@@ -127,8 +128,8 @@ DROP TABLE IF EXISTS `postevents`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `postevents` (
-  `event_id` int(11) NOT NULL,
-  `event_attendantscount` int(11) DEFAULT NULL,
+  `event_id` int NOT NULL,
+  `event_attendantscount` int DEFAULT NULL,
   `event_revenue` decimal(2,0) DEFAULT NULL,
   `event_duration` time DEFAULT NULL,
   PRIMARY KEY (`event_id`),
@@ -154,10 +155,10 @@ DROP TABLE IF EXISTS `setlist`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `setlist` (
-  `set_id` int(11) NOT NULL AUTO_INCREMENT,
+  `set_id` int NOT NULL AUTO_INCREMENT,
   `set_songname` varchar(45) DEFAULT NULL,
-  `set_artist` int(11) DEFAULT NULL,
-  `set_event` int(11) DEFAULT NULL,
+  `set_artist` int DEFAULT NULL,
+  `set_event` int DEFAULT NULL,
   PRIMARY KEY (`set_id`),
   KEY `set_artist_idx` (`set_artist`),
   KEY `set_event_idx` (`set_event`),
@@ -184,4 +185,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-04-09 15:13:13
+-- Dump completed on 2024-04-09 22:49:02
